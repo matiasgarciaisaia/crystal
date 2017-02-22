@@ -49,9 +49,18 @@ verify_linux_environment() {
     fail "\$ARCH is not set or empty."
   fi
 
-  if [ -z "$ARCH_CMD" ]; then
-    fail "\$ARCH_CMD is not set or empty."
+  if [ -z "$LLVM" ]; then
+    fail "\$LLVM is not set or empty."
   fi
+
+  case $ARCH in
+    i386)
+      ARCH_CMD=linux32
+      ;;
+    x86_64)
+      ARCH_CMD=linux64
+      ;;
+  esac
 }
 
 on_os() {
@@ -147,7 +156,7 @@ EOF
 prepare_build() {
   on_linux verify_linux_environment
 
-  on_linux docker pull "jhass/crystal-build-$ARCH"
+  on_linux docker pull "matiasgarciaisaia/crystal-build-docker:${ARCH}_llvm-${LLVM}"
 
   on_osx brew install llvm pcre crystal-lang
 }
@@ -166,7 +175,7 @@ with_build_env() {
     -w /mnt \
     -e LIBRARY_PATH="/opt/crystal/embedded/lib/" \
     -e CRYSTAL_CACHE_DIR="/tmp/crystal" \
-    "jhass/crystal-build-$ARCH" \
+    "matiasgarciaisaia/crystal-build-docker:${ARCH}_llvm-${LLVM}" \
     "$ARCH_CMD" /bin/bash -c "'$command'"
 
   on_osx PATH="/usr/local/opt/llvm/bin:\$PATH" \
