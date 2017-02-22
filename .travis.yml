@@ -19,6 +19,7 @@ matrix:
   allow_failures:
     - env: ARCH=i386 LLVM=3.5
     - env: ARCH=i386 LLVM=3.9
+    - os: osx
 before_install:
   - bin/ci prepare_system
 install:
@@ -27,10 +28,10 @@ script:
   - bin/ci build
 after_success:
   - bin/ci deploy
-branches:
-  only:
-    - master
-    - /\Arelease\/.+\z/
+# branches:
+#   only:
+#     - master
+#     - /\Arelease\/.+\z/
 notifications:
   irc:
     channels:
