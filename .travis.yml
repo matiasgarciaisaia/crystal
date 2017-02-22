@@ -20,6 +20,8 @@ matrix:
     - env: ARCH=i386 LLVM=3.5
     - env: ARCH=i386 LLVM=3.9
     - os: osx
+    - env: ARCH=x86_64 LLVM=3.5
+    - env: ARCH=x86_64 LLVM=3.9
 before_install:
   - bin/ci prepare_system
 install:
