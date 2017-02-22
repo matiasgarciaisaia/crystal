@@ -15,6 +15,10 @@ env:
 matrix:
   include:
     - os: osx
+  fast_finish: true
+  allow_failures:
+    - env: ARCH=i386 LLVM=3.5
+    - env: ARCH=i386 LLVM=3.9
 before_install:
   - bin/ci prepare_system
 install:
