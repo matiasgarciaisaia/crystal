@@ -6,8 +6,8 @@
 ##   $ make
 ## Clean up built files then build the compiler
 ##   $ make clean crystal
-## Build the compiler in release mode
-##   $ make crystal release=1
+## Build the compiler in release mode without debug info (uses less memory)
+##   $ make crystal release=1 no_debug=1
 ## Run all specs in verbose mode
 ##   $ make spec verbose=1
 
@@ -17,13 +17,14 @@ release ?=      ## Compile in release mode
 stats ?=        ## Enable statistics output
 threads ?=      ## Maximum number of threads to use
 debug ?=        ## Add symbolic debug info
+no_debug ?=     ## Avoid default debug info
 verbose ?=      ## Run specs in verbose mode
 junit_output ?= ## Directory to output junit results
 
 O := .build
 SOURCES := $(shell find src -name '*.cr')
 SPEC_SOURCES := $(shell find spec -name '*.cr')
-FLAGS := $(if $(release),--release )$(if $(stats),--stats )$(if $(threads),--threads $(threads) )$(if $(debug),-d )
+FLAGS := $(if $(release),--release )$(if $(stats),--stats )$(if $(threads),--threads $(threads) )$(if $(debug),-d )$(if $(no_debug),--no-debug )
 SPEC_FLAGS := $(if $(verbose),-v )$(if $(junit_output),--junit_output $(junit_output) )
 EXPORTS := $(if $(release),,CRYSTAL_CONFIG_PATH=`pwd`/src)
 SHELL = bash
