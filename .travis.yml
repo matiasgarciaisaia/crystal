@@ -25,12 +25,6 @@ install:
 script:
   - bin/ci build
 
-branches:
-  only:
-    - master
-    - /\Arelease\/.+\z/
-    - /.*\bci\b.*/
-
 env:
   global:
     - AWS_ACCESS_KEY_ID=AKIAIRL4BWFPN7P54TBQ
